@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.erayucar.kefycinema.R
 import com.erayucar.kefycinema.databinding.ActivityFeedBinding
 import com.erayucar.kefycinema.model.MovieModel
@@ -69,21 +68,17 @@ class FeedActivity : AppCompatActivity() {
                 call: Call<List<MovieModel>>,
                 response: Response<List<MovieModel>>
             ) {
-                    if (response.isSuccessful){
-                        Toast.makeText(this@FeedActivity, "success", Toast.LENGTH_SHORT).show()
-                        response.body()?.let {
-                            movieModels = ArrayList(it)
-                            for (movieModel : MovieModel in movieModels!!){
-                                println(movieModel.original_title)
-                            }
-                        }
+                if (response.isSuccessful){
 
+                    Toast.makeText(this@FeedActivity, "success", Toast.LENGTH_SHORT).show()
+                    response.body()?.let {
+                        movieModels = ArrayList(it)
                     }
-            }
+
+                }            }
 
             override fun onFailure(call: Call<List<MovieModel>>, t: Throwable) {
-                Toast.makeText(this@FeedActivity, "error!", Toast.LENGTH_SHORT).show()    
-                t.printStackTrace()
+                    t.printStackTrace()
             }
 
 

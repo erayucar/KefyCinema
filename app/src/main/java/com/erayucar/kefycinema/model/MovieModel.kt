@@ -1,19 +1,22 @@
 package com.erayucar.kefycinema.model
 
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
+
 
 data class MovieModel(
 
+     @SerializedName("page")
+     @Expose
+     val page: Int,
+     @SerializedName("results")
+     @Expose
+     val results: List<ResultsModel>,
+     @SerializedName("total_pages")
+     @Expose
+     val totalPages : Int,
+     @SerializedName("total_results")
+     @Expose
+     val totalResults : Int,
 
-     val  backdrop_path: String,
-     val  genre_ids : Int,
-     val  id : Int,
-     val  original_language:String,
-     val  original_title: String,
-     val  overview: String,
-     val  popularity: Double,
-     val  poster_path: String,
-     val  release_date: String,
-     val  title: String,
-     val  vote_average: Double,
-     val  vote_count: Int,
-)
+     )
