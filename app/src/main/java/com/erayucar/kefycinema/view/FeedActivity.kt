@@ -2,11 +2,11 @@ package com.erayucar.kefycinema.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.erayucar.kefycinema.R
 import com.erayucar.kefycinema.databinding.ActivityFeedBinding
 import com.erayucar.kefycinema.model.MovieModel
+import com.erayucar.kefycinema.model.ResultsModel
 import com.erayucar.kefycinema.service.MovieAPI
 import retrofit2.Call
 import retrofit2.Callback
@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class FeedActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFeedBinding
     private val BASE_URL = "https://api.themoviedb.org"
-    private var movieModels: ArrayList<MovieModel>? = null
+    private var resultModels: List<ResultsModel>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,27 +63,21 @@ class FeedActivity : AppCompatActivity() {
         val service = retrofit.create(MovieAPI::class.java)
         val call = service.getData()
 
-        call.enqueue(object: Callback<List<MovieModel>> {
-            override fun onResponse(
-                call: Call<List<MovieModel>>,
-                response: Response<List<MovieModel>>
-            ) {
+        call.enqueue(object : Callback<MovieModel> {
+            override fun onResponse(call: Call<MovieModel>, response: Response<MovieModel>) {
                 if (response.isSuccessful){
+                    response.body().let {
+                        resultModels = it!!.results
 
-                    Toast.makeText(this@FeedActivity, "success", Toast.LENGTH_SHORT).show()
-                    response.body()?.let {
-                        movieModels = ArrayList(it)
                     }
-
-                }            }
-
-            override fun onFailure(call: Call<List<MovieModel>>, t: Throwable) {
-                    t.printStackTrace()
+                }
             }
 
+            override fun onFailure(call: Call<MovieModel>, t: Throwable) {
+                t.printStackTrace()
+            }
 
         })
-
     }
-
 }
+

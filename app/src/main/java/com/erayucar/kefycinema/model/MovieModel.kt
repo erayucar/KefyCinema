@@ -8,7 +8,7 @@ data class MovieModel(
 
      @SerializedName("page")
      @Expose
-     val page: Int,
+     var page: Int,
      @SerializedName("results")
      @Expose
      val results: List<ResultsModel>,

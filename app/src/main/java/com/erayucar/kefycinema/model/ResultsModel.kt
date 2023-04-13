@@ -2,7 +2,6 @@ package com.erayucar.kefycinema.model
 
 data class ResultsModel(
     val  backdrop_path: String,
-    val  genre_ids : Int,
     val  id : Int,
     val  original_language:String,
     val  original_title: String,
