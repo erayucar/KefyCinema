@@ -28,10 +28,15 @@ class FeedActivity : AppCompatActivity() {
 
 
         replaceFragment(HomeFragment())
-
+        loadData()
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
-                R.id.home -> replaceFragment(HomeFragment())
+                R.id.home -> {
+                    replaceFragment(HomeFragment())
+                    loadData()
+
+                }
+
                 R.id.bookmark -> replaceFragment(BookmarkFragment())
                 R.id.profile -> replaceFragment(ProfileFragment())
                 else -> {}
@@ -40,7 +45,7 @@ class FeedActivity : AppCompatActivity() {
         }
 
 
-        loadData()
+
 
     }
 

@@ -19,4 +19,4 @@ data class ResultModel(
      @Expose
      val totalResults : Int,
 
-     ) : java.io.Serializable
+     )

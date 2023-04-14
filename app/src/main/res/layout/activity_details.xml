@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".view.DetailsActivity">
+
+    <ImageView
+        android:id="@+id/poster_image"
+        android:layout_width="383dp"
+        android:layout_height="241dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="2dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/textOriginal_title"
+        android:layout_width="355dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="20dp"
+        android:text="TextView"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        android:textStyle="italic|bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.421"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/poster_image" />
+
+    <ImageView
+        android:id="@+id/star"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="46dp"
+        app:layout_constraintStart_toStartOf="@+id/textOriginal_title"
+        app:layout_constraintTop_toBottomOf="@+id/textOriginal_title"
+        app:srcCompat="@drawable/baseline_star_24" />
+
+    <TextView
+        android:id="@+id/textVote_Average"
+        android:layout_width="33dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="44dp"
+        android:text="7.8"
+        android:textColor="@color/white"
+        android:textSize="21dp"
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toEndOf="@+id/star"
+        app:layout_constraintTop_toBottomOf="@+id/textOriginal_title" />
+
+    <TextView
+        android:id="@+id/movie_overview"
+        android:layout_width="367dp"
+        android:layout_height="166dp"
+        android:layout_marginTop="28dp"
+        android:text="aaaaaaaaaaaaaaaaaa"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="@+id/release_date"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/overview"
+        app:layout_constraintTop_toBottomOf="@+id/overview" />
+
+    <TextView
+        android:id="@+id/overview"
+        android:layout_width="139dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="32dp"
+        android:text="Overview"
+        android:textColor="@color/orange"
+        android:textSize="20dp"
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toStartOf="@+id/textOriginal_title"
+        app:layout_constraintTop_toBottomOf="@+id/star" />
+
+    <TextView
+        android:id="@+id/language"
+        android:layout_width="74dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="40dp"
+        android:text="TextView"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toEndOf="@+id/textVote_Average"
+        app:layout_constraintTop_toBottomOf="@+id/textOriginal_title" />
+
+    <TextView
+        android:id="@+id/release_date"
+        android:layout_width="110dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="4dp"
+        android:text="TextView"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/textOriginal_title"
+        app:layout_constraintTop_toBottomOf="@+id/textOriginal_title" />
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="36dp"
+        android:background="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/poster_image"
+        app:srcCompat="@drawable/baseline_arrow_back_ios_24" />
+</androidx.constraintlayout.widget.ConstraintLayout>

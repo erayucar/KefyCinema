@@ -8,7 +8,7 @@
 
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/poster_image"
         android:layout_width="124dp"
         android:layout_height="136dp"
         android:layout_margin="20dp"
@@ -20,23 +20,22 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/movieName"
+        android:id="@+id/textmovieName"
         android:layout_width="211dp"
         android:layout_height="30dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-
         android:text="Title"
         android:textColor="@color/white"
-        android:textSize="25sp"
+        android:textSize="22sp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/poster_image"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/voteAverage"
+        android:id="@+id/text_voteAverage"
         android:layout_width="25dp"
         android:layout_height="24dp"
         android:layout_marginStart="55dp"
@@ -45,16 +44,16 @@
         android:textColor="@color/white"
         android:textSize="15dp"
         android:textStyle="bold|italic"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/movieName" />
+        app:layout_constraintStart_toEndOf="@+id/poster_image"
+        app:layout_constraintTop_toBottomOf="@+id/textmovieName" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/star"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="11dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/movieName"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toEndOf="@+id/poster_image"
+        app:layout_constraintTop_toBottomOf="@+id/textmovieName"
         app:srcCompat="@drawable/baseline_star_24" />
 </androidx.constraintlayout.widget.ConstraintLayout>
