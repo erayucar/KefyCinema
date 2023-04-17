@@ -20,11 +20,12 @@ class HomeFragment : Fragment(),MovieRecyclerViewAdapter.Listener{
     private var movieRecyclerViewAdapter: MovieRecyclerViewAdapter? = null
     private val binding get() = _binding!!
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val view = binding.root
         return view
@@ -38,7 +39,6 @@ class HomeFragment : Fragment(),MovieRecyclerViewAdapter.Listener{
 
         arguments?.let {
             moviesList = it.getParcelableArrayList<MovieModel>("results")!!
-            println(moviesList.get(0).original_title)
             movieRecyclerViewAdapter = MovieRecyclerViewAdapter(moviesList,this)
 
 
@@ -55,11 +55,10 @@ class HomeFragment : Fragment(),MovieRecyclerViewAdapter.Listener{
         super.onViewCreated(view, savedInstanceState)
 
         val layoutManager : RecyclerView.LayoutManager = LinearLayoutManager(context)
-        binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = movieRecyclerViewAdapter
+        binding.homeRecyclerView.layoutManager = layoutManager
+        binding.homeRecyclerView.adapter = movieRecyclerViewAdapter
 
 
-        upperAndSubPage()
     }
 
     override fun onDestroyView() {
@@ -77,20 +76,13 @@ class HomeFragment : Fragment(),MovieRecyclerViewAdapter.Listener{
         }
     }
 
-    fun upperAndSubPage(){
-        binding.upperPageButton.setOnClickListener {
-            Toast.makeText(context, "upperPage", Toast.LENGTH_SHORT).show()
-        }
 
-        binding.subPageButton.setOnClickListener {
-            Toast.makeText(context, "Sub Page", Toast.LENGTH_SHORT).show()
-
-        }
-    }
 
     override fun OnitemClick(movieModel: MovieModel) {
         val intent = Intent(context,DetailsActivity::class.java)
         intent.putExtra("movie", movieModel)
         startActivity(intent)
     }
+
+
 }

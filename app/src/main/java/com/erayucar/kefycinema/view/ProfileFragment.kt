@@ -39,6 +39,14 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         auth = FirebaseAuth.getInstance()
+        val currentUser = auth.currentUser
+        if (currentUser != null){
+            binding.textProfileEmail.text = currentUser.email.toString()
+
+
+        }
+
+
         binding.logout.setOnClickListener {
             signOut()
 
