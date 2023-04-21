@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.erayucar.kefycinema.R
 
@@ -28,10 +29,16 @@ class DetailsActivity : AppCompatActivity() {
         loadIntoLayout()
         binding.bookmarkSaved.visibility = View.INVISIBLE
         binding.bookmarkSaved.setOnClickListener {
+            // Unsaving movie
             onBookmarkClicked()
+            Toast.makeText(this, "Movie unsaved", Toast.LENGTH_SHORT).show()
         }
         binding.bookmarkUnsaved.setOnClickListener {
+            //Saving movie
             onBookmarkClicked()
+            Toast.makeText(this, "Movie  saved", Toast.LENGTH_SHORT).show()
+
+
 
         }
 
@@ -40,6 +47,7 @@ class DetailsActivity : AppCompatActivity() {
       private  fun loadIntoLayout(){
         movieModel = intent.extras!!.getParcelable("movie")!!
         binding.textOriginalTitle.text = movieModel.original_title
+          binding.textVoteAverage.text = movieModel.vote_average.toString()
         binding.language.text = movieModel.original_language
         binding.movieOverview.text = movieModel.overview
         binding.releaseDate.text = movieModel.release_date

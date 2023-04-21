@@ -32,13 +32,14 @@
 
     <FrameLayout
         android:id="@+id/frameLayout"
-        android:layout_width="404dp"
-        android:layout_height="500dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/textPage"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/seachBarText">
 
     </FrameLayout>
 
@@ -89,6 +90,38 @@
         app:layout_constraintEnd_toStartOf="@+id/upperPageButton"
         app:layout_constraintHorizontal_bias="0.545"
         app:layout_constraintStart_toEndOf="@+id/subPageButton" />
+
+    <EditText
+        android:id="@+id/seachBarText"
+        android:layout_width="238dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="32dp"
+        android:background="@color/white"
+        android:ems="10"
+        android:hint="search"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintEnd_toStartOf="@+id/searcButton"
+        app:layout_constraintHorizontal_bias="0.383"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/searcButton"
+        android:layout_width="102dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/sign_in_button"
+        android:onClick="searchMovie"
+        android:text="search"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/frameLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.945"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat"
+        app:layout_constraintVertical_bias="0.444" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,5 +20,14 @@ interface MovieAPI {
 
     ): Call<ResultModel>
 
+    @GET("/3/search/movie?")
+    fun searchMovies(
+        @Query("api_key") api_key: String,
+        @Query("language") language: String,
+        @Query("query") query: String,
+        @Query("page") page: Int,
+        @Query("include_adult") includeAdult: Boolean
+    ): Call<ResultModel>
+
 
 }

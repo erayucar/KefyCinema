@@ -16,6 +16,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 
 
 class FeedActivity : AppCompatActivity() {
@@ -25,7 +26,11 @@ class FeedActivity : AppCompatActivity() {
     private var PAGE : Int = 1
     private var API_KEY: String ="63077c882e430b993c36d739549dde55"
     private var LANGUAGE: String ="en-US"
-    private var CATEGORY : String = "top_rated"
+    private var CATEGORY : String = "now_playing"
+    private var QUERY : String = ""
+    private var ADULT : Boolean = false
+    private var moviesSearchList: List<MovieModel>? = null
+
 
 
 
@@ -34,7 +39,8 @@ class FeedActivity : AppCompatActivity() {
         binding = ActivityFeedBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        binding.textPage.text = PAGE.toString()
+
+        pageBinding()
 
 
         replaceFragment(HomeFragment())
@@ -61,21 +67,6 @@ class FeedActivity : AppCompatActivity() {
                     binding.textPage.visibility = View.VISIBLE
                     PAGE = 1
                     binding.textPage.text = PAGE.toString()
-
-                    binding.upperPageButton.setOnClickListener {
-                        PAGE++
-                        binding.textPage.text = PAGE.toString()
-                        loadData()
-                    }
-                    binding.subPageButton.setOnClickListener {
-                        if (PAGE > 1){
-                            PAGE--
-                            binding.textPage.text = PAGE.toString()
-                            loadData()
-                        }
-
-
-                    }
                     replaceFragment(HomeFragment())
                     loadData()
 
@@ -134,6 +125,73 @@ class FeedActivity : AppCompatActivity() {
 
         })
     }
+
+    private fun searchdata(){
+         val retrofit = Retrofit.Builder()
+             .baseUrl(BASE_URL)
+             .addConverterFactory(GsonConverterFactory.create())
+             .build()
+        val service = retrofit.create(MovieAPI::class.java)
+        val call = service.searchMovies(API_KEY,LANGUAGE,QUERY,PAGE,ADULT)
+
+        call.enqueue(object : Callback<ResultModel>{
+            override fun onResponse(call: Call<ResultModel>, response: Response<ResultModel>) {
+                if(response.isSuccessful){
+                    response.body().let {
+                        moviesSearchList = it!!.results
+                        val fragment = HomeFragment.newInstance(moviesSearchList!!)
+                        replaceFragment(fragment)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResultModel>, t: Throwable) {
+                t.printStackTrace()
+                Toast.makeText(this@FeedActivity, "Search failed", Toast.LENGTH_SHORT).show()
+            }
+
+
+        })
+
+    }
+
+    fun searchMovie(view : View){
+        QUERY = binding.seachBarText.text.toString()
+        if (QUERY.isNotEmpty()){
+            searchdata()
+            binding.upperPageButton.visibility = View.GONE
+            binding.subPageButton.visibility = View.GONE
+            binding.textPage.visibility = View.GONE
+
+        } else {
+            Toast.makeText(this, "Please enter a search query", Toast.LENGTH_SHORT).show()
+        }
+
+
+    }
+
+    private fun pageBinding(){
+        PAGE = 1
+        binding.textPage.text = PAGE.toString()
+
+        binding.upperPageButton.setOnClickListener {
+            PAGE++
+            binding.textPage.text = PAGE.toString()
+            loadData()
+        }
+        binding.subPageButton.setOnClickListener {
+            if (PAGE > 1){
+                PAGE--
+                binding.textPage.text = PAGE.toString()
+                loadData()
+            }
+
+
+        }
+
+    }
+
+
 
 }
 
