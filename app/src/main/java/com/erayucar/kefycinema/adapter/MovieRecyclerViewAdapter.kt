@@ -36,7 +36,7 @@ class MovieRecyclerViewAdapter(private val movieList: ArrayList<MovieModel>, pri
 
 
         holder.binding.textmovieName.text = movieList.get(position).original_title
-        holder.binding.textVoteAverage.text = movieList.get(position).vote_average.toString()
+        holder.binding.textVoteAverage.text = String.format("%.1f", movieList.get(position).vote_average)
         Glide.with(holder.itemView.context)
             .load("https://image.tmdb.org/t/p/w500/${movieList.get(position).poster_path}")
             .into(holder.binding.posterImage)

@@ -11,16 +11,19 @@
         android:id="@+id/poster_image"
         android:layout_width="383dp"
         android:layout_height="241dp"
+        android:layout_marginTop="56dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="2dp"
+        app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/textOriginal_title"
-        android:layout_width="355dp"
+        android:layout_width="0dp"
         android:layout_height="36dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
         android:text="TextView"
         android:textColor="@color/white"
         android:textSize="25dp"
@@ -54,21 +57,21 @@
 
     <TextView
         android:id="@+id/movie_overview"
-        android:layout_width="367dp"
+        android:layout_width="0dp"
         android:layout_height="166dp"
         android:layout_marginTop="28dp"
+        android:layout_marginEnd="20dp"
         android:text="aaaaaaaaaaaaaaaaaa"
         android:textColor="@color/white"
         android:textSize="20dp"
         android:textStyle="italic"
-        app:layout_constraintEnd_toEndOf="@+id/release_date"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/overview"
         app:layout_constraintTop_toBottomOf="@+id/overview" />
 
     <TextView
         android:id="@+id/overview"
-        android:layout_width="139dp"
+        android:layout_width="0dp"
         android:layout_height="30dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="32dp"
@@ -89,12 +92,13 @@
         android:textColor="@color/white"
         android:textSize="20dp"
         android:textStyle="bold|italic"
+        app:layout_constraintEnd_toStartOf="@+id/release_date"
         app:layout_constraintStart_toEndOf="@+id/textVote_Average"
         app:layout_constraintTop_toBottomOf="@+id/textOriginal_title" />
 
     <TextView
         android:id="@+id/release_date"
-        android:layout_width="110dp"
+        android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:layout_marginTop="36dp"
         android:layout_marginEnd="4dp"
@@ -117,18 +121,21 @@
 
     <ImageButton
         android:id="@+id/bookmark_unsaved"
-        android:layout_width="45dp"
+        android:layout_width="0dp"
         android:layout_height="50dp"
+        android:layout_marginEnd="12dp"
         android:background="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/movie_overview"
         app:layout_constraintEnd_toEndOf="@+id/movie_overview"
         app:layout_constraintTop_toBottomOf="@+id/release_date"
+        app:layout_constraintVertical_bias="0.487"
         app:srcCompat="@drawable/baseline_bookmark_border_24" />
 
     <ImageButton
         android:id="@+id/bookmark_saved"
-        android:layout_width="44dp"
+        android:layout_width="0dp"
         android:layout_height="51dp"
+        android:layout_marginEnd="20dp"
         android:background="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/movie_overview"
         app:layout_constraintEnd_toEndOf="@+id/movie_overview"

@@ -35,7 +35,7 @@
 
     <TextView
         android:id="@+id/text_voteAverage"
-        android:layout_width="25dp"
+        android:layout_width="wrap_content"
         android:layout_height="24dp"
         android:layout_marginStart="55dp"
         android:layout_marginTop="13dp"

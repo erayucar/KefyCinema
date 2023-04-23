@@ -9,6 +9,8 @@ import com.erayucar.kefycinema.databinding.ActivityMainBinding
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
@@ -26,8 +28,14 @@ class MainActivity : AppCompatActivity() {
         auth = Firebase.auth
 
 
+
         val currentUser = auth.currentUser
+
+
+
+
         if (currentUser != null){
+
             val intent = Intent(this,FeedActivity::class.java)
             startActivity(intent)
             finish()

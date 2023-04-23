@@ -93,12 +93,14 @@
 
     <EditText
         android:id="@+id/seachBarText"
-        android:layout_width="238dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="0dp"
         android:layout_height="44dp"
         android:layout_marginTop="32dp"
         android:background="@color/white"
         android:ems="10"
-        android:hint="search"
+        android:hint="Search Movie"
         android:inputType="text"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toStartOf="@+id/searcButton"

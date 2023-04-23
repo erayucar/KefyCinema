@@ -6,14 +6,29 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.bumptech.glide.Glide
-import com.erayucar.kefycinema.R
 
 import com.erayucar.kefycinema.databinding.ActivityDetailsBinding
 import com.erayucar.kefycinema.model.MovieModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class DetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailsBinding
     private lateinit var movieModel: MovieModel
+    private lateinit var firestore : FirebaseFirestore
+    private lateinit var auth: FirebaseAuth
+    private lateinit var currentUser: FirebaseUser
+    private  var isInMyBookmark : Boolean? = null
+
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,17 +41,31 @@ class DetailsActivity : AppCompatActivity() {
             finish()
         }
 
+        firestore = Firebase.firestore
+        auth = Firebase.auth
+        currentUser = auth.currentUser!!
+
+
+        isInMyBookmark = false
+
+
+
+
+
+
+
+
+
         loadIntoLayout()
-        binding.bookmarkSaved.visibility = View.INVISIBLE
+        onBookmarkClicked()
+
+
         binding.bookmarkSaved.setOnClickListener {
-            // Unsaving movie
-            onBookmarkClicked()
-            Toast.makeText(this, "Movie unsaved", Toast.LENGTH_SHORT).show()
-        }
+            // remove movie
+            deleteFromFirestore()        }
         binding.bookmarkUnsaved.setOnClickListener {
-            //Saving movie
-            onBookmarkClicked()
-            Toast.makeText(this, "Movie  saved", Toast.LENGTH_SHORT).show()
+            //add movie
+            putDataToFirestore()
 
 
 
@@ -50,7 +79,12 @@ class DetailsActivity : AppCompatActivity() {
           binding.textVoteAverage.text = movieModel.vote_average.toString()
         binding.language.text = movieModel.original_language
         binding.movieOverview.text = movieModel.overview
-        binding.releaseDate.text = movieModel.release_date
+
+        val date = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(movieModel.release_date.toString())
+        val formatDate = SimpleDateFormat("dd-MM-yyyy",Locale.ENGLISH).format(date)
+        binding.releaseDate.text = formatDate
+
+
         Glide.with(this)
             .load("https://image.tmdb.org/t/p/w500/${movieModel.poster_path}")
             .into(binding.posterImage)
@@ -61,15 +95,49 @@ class DetailsActivity : AppCompatActivity() {
 
     private fun onBookmarkClicked() {
 
+        firestore.collection("Users").document(currentUser.uid)
+            .collection("Bookmarks")
+            .document(movieModel.id.toString())
+            .addSnapshotListener { value, error ->
+               isInMyBookmark = value!!.exists()
+                if (isInMyBookmark!!){
 
-        if (binding.bookmarkSaved.visibility == View.VISIBLE) {
-            // If imageButton1 is currently visible, make it invisible and make imageButton2 visible
-            binding.bookmarkSaved.visibility= View.INVISIBLE
-            binding.bookmarkUnsaved.visibility = View.VISIBLE
-        } else {
-            // If imageButton1 is currently invisible, make it visible and make imageButton2 invisible
-            binding.bookmarkSaved.visibility= View.VISIBLE
-            binding.bookmarkUnsaved.visibility = View.INVISIBLE
+                    binding.bookmarkSaved.visibility= View.VISIBLE
+                    binding.bookmarkUnsaved.visibility = View.INVISIBLE
+
+                }else{
+                    binding.bookmarkSaved.visibility= View.INVISIBLE
+                    binding.bookmarkUnsaved.visibility = View.VISIBLE
+
+                }
+
+            }
+
+    }
+
+    private fun putDataToFirestore(){
+        val movieMap = hashMapOf<String,Any>()
+            movieMap.put("id",movieModel.id)
+            movieMap.put("original_title",movieModel.original_title)
+            movieMap.put("original_language",movieModel.original_language)
+            movieMap.put("overview",movieModel.overview)
+            movieMap.put("poster_path",movieModel.poster_path)
+            movieMap.put("release_date",movieModel.release_date)
+            movieMap.put("vote_average",movieModel.vote_average)
+
+            firestore.collection("Users").document(currentUser.uid).collection("Bookmarks").document(movieModel.id.toString()).set(movieMap).addOnSuccessListener {
+                Toast.makeText(this@DetailsActivity, "Movie Saved", Toast.LENGTH_SHORT).show()
+            }.addOnFailureListener {
+                Toast.makeText(this@DetailsActivity, it.localizedMessage, Toast.LENGTH_SHORT).show()
+            }
+
+    }
+    private fun deleteFromFirestore(){
+
+        firestore.collection("Users").document(currentUser.uid).collection("Bookmarks").document(movieModel.id.toString()).delete().addOnSuccessListener {
+            Toast.makeText(this@DetailsActivity, "Movie unsaved", Toast.LENGTH_SHORT).show()
+        }.addOnFailureListener {
+            Toast.makeText(this@DetailsActivity, it.localizedMessage, Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -65,6 +65,9 @@ class FeedActivity : AppCompatActivity() {
                     binding.upperPageButton.visibility = View.VISIBLE
                     binding.subPageButton.visibility = View.VISIBLE
                     binding.textPage.visibility = View.VISIBLE
+                    binding.searcButton.visibility = View.VISIBLE
+                    binding.seachBarText.visibility = View.VISIBLE
+
                     PAGE = 1
                     binding.textPage.text = PAGE.toString()
                     replaceFragment(HomeFragment())
@@ -76,6 +79,8 @@ class FeedActivity : AppCompatActivity() {
                     binding.upperPageButton.visibility = View.GONE
                     binding.subPageButton.visibility = View.GONE
                     binding.textPage.visibility = View.GONE
+                    binding.searcButton.visibility = View.GONE
+                    binding.seachBarText.visibility = View.GONE
 
                     replaceFragment(BookmarkFragment())
                 }
@@ -83,6 +88,8 @@ class FeedActivity : AppCompatActivity() {
                     binding.upperPageButton.visibility = View.GONE
                     binding.subPageButton.visibility = View.GONE
                     binding.textPage.visibility = View.GONE
+                    binding.searcButton.visibility = View.GONE
+                    binding.seachBarText.visibility = View.GONE
 
                     replaceFragment(ProfileFragment())
                 }
@@ -157,7 +164,7 @@ class FeedActivity : AppCompatActivity() {
 
     fun searchMovie(view : View){
         QUERY = binding.seachBarText.text.toString()
-        if (QUERY.isNotEmpty()){
+        if (QUERY.isNotEmpty() || QUERY != ""){
             searchdata()
             binding.upperPageButton.visibility = View.GONE
             binding.subPageButton.visibility = View.GONE
