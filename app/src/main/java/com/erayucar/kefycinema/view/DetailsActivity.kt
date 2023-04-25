@@ -126,7 +126,7 @@ class DetailsActivity : AppCompatActivity() {
             movieMap.put("vote_average",movieModel.vote_average)
 
             firestore.collection("Users").document(currentUser.uid).collection("Bookmarks").document(movieModel.id.toString()).set(movieMap).addOnSuccessListener {
-                Toast.makeText(this@DetailsActivity, "Movie Saved", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@DetailsActivity, "Movie added to Bookmarks", Toast.LENGTH_SHORT).show()
             }.addOnFailureListener {
                 Toast.makeText(this@DetailsActivity, it.localizedMessage, Toast.LENGTH_SHORT).show()
             }
@@ -135,7 +135,7 @@ class DetailsActivity : AppCompatActivity() {
     private fun deleteFromFirestore(){
 
         firestore.collection("Users").document(currentUser.uid).collection("Bookmarks").document(movieModel.id.toString()).delete().addOnSuccessListener {
-            Toast.makeText(this@DetailsActivity, "Movie unsaved", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@DetailsActivity, "Movie removed from Bookmarks", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener {
             Toast.makeText(this@DetailsActivity, it.localizedMessage, Toast.LENGTH_SHORT).show()
         }

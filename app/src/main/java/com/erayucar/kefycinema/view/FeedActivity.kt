@@ -4,19 +4,19 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import com.erayucar.kefycinema.R
 import com.erayucar.kefycinema.databinding.ActivityFeedBinding
-import com.erayucar.kefycinema.model.ResultModel
 import com.erayucar.kefycinema.model.MovieModel
 import com.erayucar.kefycinema.service.MovieAPI
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 
 
 class FeedActivity : AppCompatActivity() {
@@ -30,6 +30,15 @@ class FeedActivity : AppCompatActivity() {
     private var QUERY : String = ""
     private var ADULT : Boolean = false
     private var moviesSearchList: List<MovieModel>? = null
+    private var loadJob : Job? = null
+    private var searchJob : Job? = null
+
+
+    val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+        println(throwable.localizedMessage)
+
+    }
+
 
 
 
@@ -49,7 +58,10 @@ class FeedActivity : AppCompatActivity() {
 
     }
 
-
+    override fun onDestroy() {
+        super.onDestroy()
+        loadJob?.cancel()
+    }
 
     private fun replaceFragment(fragment : Fragment){
         val fragmentManager = supportFragmentManager
@@ -67,6 +79,9 @@ class FeedActivity : AppCompatActivity() {
                     binding.textPage.visibility = View.VISIBLE
                     binding.searcButton.visibility = View.VISIBLE
                     binding.seachBarText.visibility = View.VISIBLE
+
+                    binding.seachBarText.setText("")
+
 
                     PAGE = 1
                     binding.textPage.text = PAGE.toString()
@@ -109,13 +124,13 @@ class FeedActivity : AppCompatActivity() {
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
-            .build()
+            .build().create(MovieAPI::class.java)
 
-        val service = retrofit.create(MovieAPI::class.java)
-        val call = service.getData(CATEGORY,API_KEY,LANGUAGE,PAGE)
+        loadJob = CoroutineScope(Dispatchers.IO).launch {
 
-        call.enqueue(object : Callback<ResultModel> {
-            override fun onResponse(call: Call<ResultModel>, response: Response<ResultModel>) {
+            val response = retrofit.getData(CATEGORY,API_KEY,LANGUAGE,PAGE)
+
+            withContext(Dispatchers.Main + exceptionHandler){
                 if (response.isSuccessful){
                     response.body().let {
                         moviesList = it!!.results
@@ -124,21 +139,34 @@ class FeedActivity : AppCompatActivity() {
 
                     }
                 }
-            }
 
-            override fun onFailure(call: Call<ResultModel>, t: Throwable) {
-                t.printStackTrace()
             }
+        }
 
-        })
     }
 
     private fun searchdata(){
          val retrofit = Retrofit.Builder()
              .baseUrl(BASE_URL)
              .addConverterFactory(GsonConverterFactory.create())
-             .build()
-        val service = retrofit.create(MovieAPI::class.java)
+             .build().create(MovieAPI::class.java)
+
+        searchJob = CoroutineScope(Dispatchers.IO).launch {
+            val response = retrofit.searchMovies(API_KEY,LANGUAGE,QUERY,PAGE,ADULT)
+
+            withContext(Dispatchers.Main + exceptionHandler){
+                if(response.isSuccessful){
+                    response.body().let {
+                        moviesSearchList = it!!.results
+                        val fragment = HomeFragment.newInstance(moviesSearchList!!)
+                        replaceFragment(fragment)
+                    }
+                }
+
+            }
+
+        }
+       /* val service = retrofit.create(MovieAPI::class.java)
         val call = service.searchMovies(API_KEY,LANGUAGE,QUERY,PAGE,ADULT)
 
         call.enqueue(object : Callback<ResultModel>{
@@ -158,7 +186,7 @@ class FeedActivity : AppCompatActivity() {
             }
 
 
-        })
+        }) */
 
     }
 

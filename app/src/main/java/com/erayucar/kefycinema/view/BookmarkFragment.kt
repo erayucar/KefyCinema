@@ -26,6 +26,7 @@ class BookmarkFragment : Fragment(), MovieRecyclerViewAdapter.Listener {
     private lateinit var firestore: FirebaseFirestore
 
 
+
     private lateinit var moviesList: ArrayList<MovieModel>
     private var movieRecyclerViewAdapter: MovieRecyclerViewAdapter? = null
 
@@ -37,7 +38,10 @@ class BookmarkFragment : Fragment(), MovieRecyclerViewAdapter.Listener {
         firestore = Firebase.firestore
         moviesList = ArrayList<MovieModel>()
 
+
         getDataFromFirestore()
+
+
         movieRecyclerViewAdapter = MovieRecyclerViewAdapter(moviesList,this)
 
 
@@ -115,7 +119,6 @@ class BookmarkFragment : Fragment(), MovieRecyclerViewAdapter.Listener {
                             }
 
                                 movieRecyclerViewAdapter!!.notifyDataSetChanged()
-
                         }
 
                     }
