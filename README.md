@@ -33,11 +33,10 @@
 ### Tech stack & Open-source libraries
 
 - Minimum SDK level 21
-- 100% [Kotlin](https://kotlinlang.org/) based + [Coroutines](https://github.com/Kotlin/kotlinx.coroutines) and [Flow](https://developer.android.com/kotlin/flow)
+- 100% [Kotlin](https://kotlinlang.org/) based + [Coroutines](https://github.com/Kotlin/kotlinx.coroutines)
 - [JetPack](https://developer.android.com/jetpack)
     - [Fragment-ktx](https://developer.android.com/kotlin/ktx#fragment) - A set of Kotlin extensions that helps with fragment lifecycle.
     - [View Binding](https://developer.android.com/topic/libraries/view-binding) - Allows you to more easily write code that interacts with views
-    - [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) - UI related data holder, lifecycle aware.
 
   - Clean Architecture approach.
 - [Retrofit](https://square.github.io/retrofit/) A type-safe HTTP client for Android and Java
